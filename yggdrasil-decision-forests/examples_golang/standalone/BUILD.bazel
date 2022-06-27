@@ -1,0 +1,50 @@
+load(":cc_static_library.bzl", "cc_static_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+
+package(
+    default_visibility = ["//visibility:public"],
+    licenses = ["notice"],
+)
+
+cc_static_library(
+    name = "mylib_static",
+    deps = [":mylib_a"],
+    #dep = ":mylib_a",
+)
+
+cc_library(
+    name = "mylib_a",
+    srcs = [
+        "lib/mylib.cc",
+        "lib/mylib.hh",
+    ],
+    linkstatic = 1,
+    deps = [
+        "@com_google_absl//absl/flags:flag",
+        "@ydf//yggdrasil_decision_forests/dataset:all_dataset_formats",
+        "@ydf//yggdrasil_decision_forests/dataset:data_spec",
+        "@ydf//yggdrasil_decision_forests/dataset:data_spec_cc_proto",
+        "@ydf//yggdrasil_decision_forests/dataset:data_spec_inference",
+        "@ydf//yggdrasil_decision_forests/dataset:vertical_dataset_io",
+        "@ydf//yggdrasil_decision_forests/learner:all_learners",
+        "@ydf//yggdrasil_decision_forests/learner:learner_library",
+        "@ydf//yggdrasil_decision_forests/metric",
+        "@ydf//yggdrasil_decision_forests/metric:report",
+        "@ydf//yggdrasil_decision_forests/model:model_library",
+        "@ydf//yggdrasil_decision_forests/utils:filesystem",
+        "@ydf//yggdrasil_decision_forests/utils:logging",
+        "@ydf//yggdrasil_decision_forests/model:all_models",
+    ],
+)
+
+go_binary(
+    name = "main",
+    cgo=True,
+    srcs = [
+	"main.go",
+	"cmylib.cc",
+        "cmylib.h",
+        "mylib.hh",
+    ],
+    cdeps=[":mylib_a"],
+)
