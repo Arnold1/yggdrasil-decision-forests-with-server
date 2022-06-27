@@ -25,7 +25,7 @@ void cxxFoo::Bar(void){
 
   // Import the model.
   LOG(INFO) << "Import the model";
-  const std::string model_path = "/tmp/my_saved_model/1/assets";
+  const std::string model_path = "./generated_model/tmp/my_saved_model/1/assets";
   std::unique_ptr<ygg::model::AbstractModel> model;
   QCHECK_OK(ygg::model::LoadModel(model_path, &model));
 

@@ -1,15 +1,10 @@
-load(":cc_static_library.bzl", "cc_static_library")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+load("//:cc_static_library.bzl", "cc_static_library") # use: deps = [":mylib_a"],
+#load("//:cc_library_static.bzl", "cc_static_library") # dep = ":mylib_a",
 
 package(
     default_visibility = ["//visibility:public"],
     licenses = ["notice"],
-)
-
-cc_static_library(
-    name = "mylib_static",
-    deps = [":mylib_a"],
-    #dep = ":mylib_a",
 )
 
 cc_library(
@@ -37,12 +32,18 @@ cc_library(
     ],
 )
 
+cc_static_library(
+    name = "mylib_static",
+    deps = [":mylib_a"],
+    #dep = ":mylib_a",
+)
+
 go_binary(
     name = "main",
-    cgo=True,
+    cgo = True,
     srcs = [
-	"main.go",
-	"cmylib.cc",
+        "main.go",
+        "cmylib.cc",
         "cmylib.h",
         "mylib.hh",
     ],
