@@ -25,5 +25,7 @@ RUN pip3 install conan
 # Install tensorflow_decision_forests
 RUN pip3 install -vv tensorflow_decision_forests
 
+ADD . /home/developer/yggdrasil-decision-forests
+
 # Build yggdrasil-decision-forests
 RUN cd yggdrasil-decision-forests && bazel build //yggdrasil_decision_forests/cli:all --config=linux_cpp17 --config=linux_avx2
