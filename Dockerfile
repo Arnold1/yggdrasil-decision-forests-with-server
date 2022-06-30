@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
     apt install -y \
-        python3 python3-pip wget curl unzip git nano nvidia-cuda-dev golang libprotobuf-dev protobuf-compiler
+        python3 python3-pip wget curl unzip git nano nvidia-cuda-dev golang libprotobuf-dev protobuf-compiler cmake
 
 # Set Home
 WORKDIR /home/developer/yggdrasil-decision-forests
